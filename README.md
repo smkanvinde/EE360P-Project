@@ -1,2 +1,10 @@
 # EE360P-Project
-EE 360P - Spring 2017
+EE 360P Final Term Project - Spring 2017
+
+Shantanu Kanvinde - smk2842
+
+Mukundan Kuthalam - mk33274
+
+Paul Hainey - 
+
+Matthew James - 

@@ -1,13 +1,13 @@
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 
 public class Receiver extends Thread {
 	
 	protected int port;
-	protected static Queue<String> messageQ;
+	protected static BlockingQueue<String> messageQ;
 	
-	public Receiver(Queue<String> q) {
+	public Receiver(BlockingQueue<String> q) {
 		port = 1108;
 		messageQ = q;
 	}

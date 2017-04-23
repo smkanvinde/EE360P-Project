@@ -1,11 +1,11 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Coordinator {
 	
-	protected static Queue<String> messageQ = new LinkedList<String>();
+	protected static BlockingQueue<String> messageQ = new LinkedBlockingQueue<String>();
 	
 	
 	public static void main(String[] args) {

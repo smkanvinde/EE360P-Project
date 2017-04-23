@@ -15,6 +15,10 @@ public class Client extends Thread {
 		this.myPort = myPort;
 	}
 	
+	public int getNum() {return this.num;}
+	public int getNumClients() {return this.numClients;}
+	public int getMyPort() {return this.myPort;}
+	
 	public void run() {
 		String hostName = "localhost";
 		int portNumber = 1108; //this is the server port
@@ -22,7 +26,7 @@ public class Client extends Thread {
 		
 		try {
 	            
-	            new ClientListener(myPort).start(); //start a listener for incoming messages
+	            new ClientListener(this.getMyPort()).start(); //start a listener for incoming messages
 	            sleep(1000); //wait a second for all clients to be started
 	            
 	            while (true){
@@ -32,17 +36,18 @@ public class Client extends Thread {
 	            	String thisMessage = "hello world"; //TODO change this to suit functionality
 	            	
 	            	//send a message to a random other client
-	            	int target = (int)(Math.random() * numClients);
+	            	int target = (int)(Math.random() * this.getNumClients());
 	            	
-	            	while (target == num) { //don't send yourself a message
-	            		target = (int)(Math.random() * numClients);
+	            	while (target == this.getNum()) { //don't send yourself a message
+	            		target = (int)(Math.random() * this.getNumClients());
 	            	}
 	            	
-	            	String message = "From:" + num + "\nTo:" + target + "\nMessage:" + thisMessage;
+	            	String message = "From:" + this.getNum() + "\nTo:" + target + "\nMessage:" + thisMessage;
 	            	out.println(message);
-	            	
+	            	out.close();
 	            	socket.close();
-	            	sleep(30000); //sleep for human workability
+	            	
+	            	sleep(30000); //sleep 30s for human workability
 	            }
 	            	
 	        } catch (UnknownHostException e) {

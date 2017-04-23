@@ -3,15 +3,15 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
 
 public class Sender extends Thread {
 	
-	protected static Queue<String> messageQ;
+	protected static BlockingQueue<String> messageQ;
 	protected ArrayList<Integer> clients;
 	
-	public Sender(Queue<String> q, ArrayList<Integer> clients) {
+	public Sender(BlockingQueue<String> q, ArrayList<Integer> clients) {
 		messageQ = q;
 		this.clients = clients;
 	}
@@ -22,15 +22,14 @@ public class Sender extends Thread {
 		
 		while (true) {
 			Scanner in = new Scanner(System.in);
-			if (messageQ.isEmpty()) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
 			
-			String message = messageQ.poll();
+			String message = "";
+			try {
+				message = messageQ.take(); //blocking call
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
 			
 			System.out.println("There is a message in the queue:\n");
 			System.out.println(message + "\n");

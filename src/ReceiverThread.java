@@ -2,14 +2,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 
 public class ReceiverThread extends Thread {
 	
 	protected Socket socket;
-	protected static Queue<String> messageQ;
+	protected static BlockingQueue<String> messageQ;
 	
-	public ReceiverThread(Queue<String> q, Socket socket) {
+	public ReceiverThread(BlockingQueue<String> q, Socket socket) {
 		this.socket = socket;
 		messageQ = q;
 	}

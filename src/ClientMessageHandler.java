@@ -32,7 +32,15 @@ public class ClientMessageHandler extends Thread {
 	            message = inputLine;
 	            
 	            //output to console for now - TODO make GUI later?
-	            System.out.println("Process" + sender + "->Process" + thisClient + ": " + message);
+	            StringBuilder sb = new StringBuilder();
+	            sb.append("\n(Message Received: Process");
+	            sb.append(sender);
+	            sb.append("->Process");
+	            sb.append(thisClient);
+	            sb.append(": ");
+	            sb.append(message);
+	            sb.append(")\n>");
+	            System.out.print(sb.toString());
 	            
 	            socket.close();
 	        } catch (IOException e) {

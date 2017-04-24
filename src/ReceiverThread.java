@@ -2,14 +2,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class ReceiverThread extends Thread {
 	
 	protected Socket socket;
-	protected static BlockingQueue<String> messageQ;
+	protected static LinkedBlockingDeque<String> messageQ;
 	
-	public ReceiverThread(BlockingQueue<String> q, Socket socket) {
+	public ReceiverThread(LinkedBlockingDeque<String> q, Socket socket) {
 		this.socket = socket;
 		messageQ = q;
 	}
@@ -23,7 +23,6 @@ public class ReceiverThread extends Thread {
 	            
 	            String inputLine = in.readLine();
 	            messageQ.add(inputLine);
-	            notifyAll();
 	            
 	            
 	            in.close();

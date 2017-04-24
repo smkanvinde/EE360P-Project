@@ -4,24 +4,24 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class Sender extends Thread {
 	
-	protected static BlockingQueue<String> messageQ;
+	protected static LinkedBlockingDeque<String> messageQ;
 	protected ArrayList<Integer> clients;
 	
-	public Sender(BlockingQueue<String> q, ArrayList<Integer> clients) {
+	public Sender(LinkedBlockingDeque<String> q, ArrayList<Integer> clients) {
 		messageQ = q;
 		this.clients = clients;
 	}
 	
 	public void run() {
 		
-		
+		Scanner in = new Scanner(System.in);
 		
 		while (true) {
-			Scanner in = new Scanner(System.in);
+			
 			
 			String message = "";
 			try {
@@ -30,27 +30,37 @@ public class Sender extends Thread {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} 
-			
+			System.out.println("====================================");
 			System.out.println("There is a message in the queue:\n");
-			System.out.println(message + "\n");
-			System.out.println("What would you like to do?\n");
-			System.out.println("\t1: Send this message unchanged.\n");
-			System.out.println("\t2: Change this message's contents and send it.\n");
-			System.out.println("\t3: Delete this message without sending.\n");
-			System.out.println("\t4: Defer this message to the end of the queue.\n>");
+			StringBuilder sb = new StringBuilder();
+			sb.append(message);
+			sb.append("\n");
+			System.out.println(sb.toString());
+			System.out.println("What would you like to do?");
+			System.out.println("\t1: Send this message unchanged.");
+			System.out.println("\t2: Change this message's contents and send it.");
+			System.out.println("\t3: Delete this message without sending.");
+			System.out.println("\t4: Defer this message to the end of the queue.");
+			System.out.println("\t5: Reprint prompt.");
+			System.out.print("\t6: Exit system.\n>");
 			
 			int userChoice = 0;
 			
 			userChoice = in.nextInt();
+			in.nextLine();
 			
 			
-			while (userChoice <= 0 || userChoice > 4) {
+			while (userChoice <= 0 || userChoice > 6) {
 				System.out.println("Please provide a valid input.");
-				System.out.println("What would you like to do?\n");
-				System.out.println("\t1: Send this message unchanged.\n");
-				System.out.println("\t2: Change this message's contents and send it.\n");
-				System.out.println("\t3: Delete this message without sending.\n");
-				System.out.println("\t4: Defer this message to the end of the queue.\n>");
+				System.out.println("What would you like to do?");
+				System.out.println("\t1: Send this message unchanged.");
+				System.out.println("\t2: Change this message's contents and send it.");
+				System.out.println("\t3: Delete this message without sending.");
+				System.out.println("\t4: Defer this message to the end of the queue.");
+				System.out.println("\t5: Reprint prompt.");
+				System.out.print("\t6: Exit system.\n>");
+				userChoice = in.nextInt();
+				in.nextLine();
 			}
 			
 			String hostname = "localhost";
@@ -58,7 +68,7 @@ public class Sender extends Thread {
 			
 			switch(userChoice) {
 			case 1:
-				target = Integer.parseInt(message.substring(message.indexOf("To:") + 5, message.indexOf("To:") + 6));
+				target = Integer.parseInt(message.substring(message.indexOf("To:") + 3, message.indexOf("To:") + 4));
 				
 				
 				try {
@@ -77,15 +87,18 @@ public class Sender extends Thread {
 			        }
 				break;
 			case 2:
-				System.out.println("What would you like the message contents to be?\n>");
-				String newMessage = message.substring(0, message.indexOf("Message:") + 9);
-				String userMessage = "";
+				System.out.print("What would you like the message contents to be?\n>");
+				String newMessage = message.substring(0, message.indexOf("Message:") + 8);
+
 				
-				userMessage = in.nextLine();
+				String userMessage = in.nextLine();
 				
-				newMessage = newMessage + userMessage;
+				StringBuilder newMessageSB = new StringBuilder();
+				newMessageSB.append(newMessage);
+				newMessageSB.append(userMessage);
+				newMessage = newMessageSB.toString();
 				
-				target = Integer.parseInt(message.substring(message.indexOf("To:") + 5, message.indexOf("To:") + 6));
+				target = Integer.parseInt(message.substring(message.indexOf("To:") + 3, message.indexOf("To:") + 4));
 				
 				try {
 						Socket socket = new Socket(hostname, clients.get(target));
@@ -110,8 +123,14 @@ public class Sender extends Thread {
 			case 4:
 				messageQ.add(message);
 				break;
+			case 5:
+				messageQ.addFirst(message);
+				break;
+			case 6:
+				System.exit(0);
+				break;
 			}
-			in.close();
+			//in.close();
 		}
 	}
 }

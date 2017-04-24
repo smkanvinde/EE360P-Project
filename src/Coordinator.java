@@ -1,22 +1,22 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class Coordinator {
 	
-	protected static BlockingQueue<String> messageQ = new LinkedBlockingQueue<String>();
+	protected static LinkedBlockingDeque<String> messageQ = new LinkedBlockingDeque<String>();
 	
 	
 	public static void main(String[] args) {
 		int serverPort = 1108; //TODO this is the server port
 		Scanner in = new Scanner(System.in);
-		System.out.println("How many Clients should I start? >");
+		System.out.print("How many Clients should I start? >");
 		int numClients = in.nextInt();
 		while (numClients <= 0){
-			System.out.println("You must input a positive number of threads to start.");
-			System.out.println("How many Clients should I start? >");
+			System.out.println("\nYou must input a positive number of threads to start.");
+			System.out.print("How many Clients should I start? >");
 			in.nextInt();
+			in.nextLine();
 		}
 		
 		//setup list of clients
@@ -33,6 +33,6 @@ public class Coordinator {
 		for (int i = 0; i < numClients; i++) {
 			new Client(i, numClients, clientPorts.get(i)).start();
 		}
-		in.close();
+		//in.close();
 	}
 }

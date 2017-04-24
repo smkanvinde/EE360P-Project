@@ -33,7 +33,10 @@ public class Client extends Thread {
 		            Socket socket = new Socket(hostName, portNumber);
 		            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 		            
-	            	String thisMessage = "hello world"; //TODO change this to suit functionality
+		            StringBuilder messageSB = new StringBuilder();
+		            messageSB.append("hello ");
+		            
+	            	//String thisMessage = "hello world"; //TODO change this to suit functionality
 	            	
 	            	//send a message to a random other client
 	            	int target = (int)(Math.random() * this.getNumClients());
@@ -42,8 +45,20 @@ public class Client extends Thread {
 	            		target = (int)(Math.random() * this.getNumClients());
 	            	}
 	            	
-	            	String message = "From:" + this.getNum() + "\nTo:" + target + "\nMessage:" + thisMessage;
-	            	out.println(message);
+	            	messageSB.append(target);
+	            	messageSB.append(" this is ");
+	            	messageSB.append(this.getNum());
+	            	String thisMessage = messageSB.toString();
+	            	
+	            	//String message = "From:" + this.getNum() + "\nTo:" + target + "\nMessage:" + thisMessage;
+	            	StringBuilder sb = new StringBuilder();
+	            	sb.append("From:");
+	            	sb.append(this.getNum());
+	            	sb.append(" To:");
+	            	sb.append(target);
+	            	sb.append(" Message:");
+	            	sb.append(thisMessage);
+	            	out.println(sb.toString());
 	            	out.close();
 	            	socket.close();
 	            	

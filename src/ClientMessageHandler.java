@@ -45,7 +45,6 @@ public class ClientMessageHandler extends Thread {
 	            
 	            JFrame f = new JFrame();
 	    		JOptionPane.showMessageDialog(f, sb.toString());
-	            //System.out.print(sb.toString());
 	            
 	            socket.close();
 	        } catch (IOException e) {

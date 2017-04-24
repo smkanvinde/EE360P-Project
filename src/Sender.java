@@ -1,16 +1,10 @@
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 import java.util.concurrent.LinkedBlockingDeque;
 import javax.swing.*;
@@ -192,7 +186,6 @@ public class Sender extends Thread {
 			}
 			f.setVisible(false);
 			controlPanel.setVisible(false);
-			//in.close();
 		}
 	}
 }

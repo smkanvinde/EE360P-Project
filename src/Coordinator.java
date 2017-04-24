@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.LinkedBlockingDeque;
+import javax.swing.*;
 
 public class Coordinator {
 	
@@ -9,7 +10,7 @@ public class Coordinator {
 	
 	public static void main(String[] args) {
 		int serverPort = 1108; //TODO this is the server port
-		Scanner in = new Scanner(System.in);
+		/*Scanner in = new Scanner(System.in);
 		System.out.print("How many Clients should I start? >");
 		int numClients = in.nextInt();
 		while (numClients <= 0){
@@ -17,6 +18,30 @@ public class Coordinator {
 			System.out.print("How many Clients should I start? >");
 			in.nextInt();
 			in.nextLine();
+		}
+		*/
+		JFrame f = new JFrame();
+		String num = JOptionPane.showInputDialog(f, "How many Clients should I start?");
+		int numClients;
+		if (num == null || num.equals(""))
+			numClients = 0;
+		else 
+			try {
+				numClients = Integer.parseInt(num);
+			} catch (NumberFormatException e) {
+				numClients = 0;
+			}
+		while (numClients <= 0){
+			JOptionPane.showMessageDialog(f, "Error: You must enter a positive number of Clients to start.");
+			num = JOptionPane.showInputDialog(f, "How many clients should I start?");
+			if (num == null || num.equals(""))
+				numClients = 0;
+			else 
+				try {
+					numClients = Integer.parseInt(num);
+				} catch (NumberFormatException e) {
+					numClients = 0;
+				}
 		}
 		
 		//setup list of clients

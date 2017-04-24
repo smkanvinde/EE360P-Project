@@ -3,6 +3,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class ClientMessageHandler extends Thread {
 	
 	private Socket socket = null;
@@ -33,14 +36,16 @@ public class ClientMessageHandler extends Thread {
 	            
 	            //output to console for now - TODO make GUI later?
 	            StringBuilder sb = new StringBuilder();
-	            sb.append("\n(Message Received: Process");
+	            sb.append("\nMessage Received: Process");
 	            sb.append(sender);
 	            sb.append("->Process");
 	            sb.append(thisClient);
 	            sb.append(": ");
 	            sb.append(message);
-	            sb.append(")\n>");
-	            System.out.print(sb.toString());
+	            
+	            JFrame f = new JFrame();
+	    		JOptionPane.showMessageDialog(f, sb.toString());
+	            //System.out.print(sb.toString());
 	            
 	            socket.close();
 	        } catch (IOException e) {

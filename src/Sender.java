@@ -83,11 +83,12 @@ public class Sender extends Thread {
 			prompt.append("\t4: Defer this message to the end of the queue.\n");
 			prompt.append("\t5: Exit system.\n");
 			
+			controlPanel.setLocation(dim.width/4-controlPanel.getSize().width/2, dim.height/4-controlPanel.getSize().height/2);
 			
 			JTextArea area = new JTextArea(prompt.toString());
-			area.setBounds(20,20,450,175);
+			area.setBounds(20,20,450,200);
 			controlPanel.add(area);
-			controlPanel.setSize(500, 200);
+			controlPanel.setSize(500, 225);
 			controlPanel.setLayout(null);
 			controlPanel.setVisible(true);
 			
